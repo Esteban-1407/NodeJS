@@ -1,14 +1,19 @@
 const express = require('express');
-const cors = require('cors');
-const userRoutes = require('./routes/userRoutes');
-const errorHandler = require('./middlewares/errorHandler');
+const dotenv = require('dotenv');
+const connectDB = require('./src/config/database.js');
+const itemRoutes = require('./src/routes/itemRoutes.js');
+const errorHandler = require('./src/middleware/errorHandler.js');
+
+dotenv.config();
 
 const app = express();
 
-// Middleware global
-app.use(cors());
+connectDB();
+
 app.use(express.json());
-app.use('/api', userRoutes);
+
+app.use('/api/items', itemRoutes);
+
 app.use(errorHandler);
 
 module.exports = app;
